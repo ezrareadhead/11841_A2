@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+    <h1>Exhibitions</h1>
+    <ul id="exhibitions-list"></ul>
+
+    <script type="text/javascript">
+
+        // this is my API key from NMA webiste
+        //const apikey = "KYFz2RvZ7TgkrdZBycoh7YHMbBaZC7zr";
+        //const namURL = "https://data.nma.gov.au/object?apikey" + apikey;
+
+        //query the NMA API
+        const nmaAPI = "https://data.nma.gov.au/object?title=*";
+
+        // function that will load exhibitions
+        async function getExhibitions(){
+            const exhListItem = document.getElementById('exhibitions-list');
+
+            try {
+                // go get the data from NMA
+                const response = await fetch(nmaAPI);
+                // return it in JSON
+                const data = await response.json();
+
+                // log the data to the browser
+                console.log(data);
+
+                data.data.forEach(item => {
+                    // console.log(item);
+
+                    // create list item
+                    const listItem = document.createElement('li');
+
+                    // add the content to it
+                    listItem.textContent = item.title;
+
+                    // console.log(listItem);
+
+                    // // append the children to parent ul
+                    exhListItem.appendChild(listItem);
+
+                    // exhListItem.appendChild(listItem);
+
+                })
+             } catch(error){
+                console.log('error: ', error);
+             }
+
+        }
+
+        // call the function so it executes
+        getExhibitions()
+            
+    </script>
+</body>
+</html>
