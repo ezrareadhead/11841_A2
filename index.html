@@ -18,13 +18,15 @@
         //query the NMA API
         const nmaAPI = "https://data.nma.gov.au/object?title=*";
 
+        const namImg = "https://data.nma.gov.au/object?limit=10&media=*&format=simple"
+
         // function that will load exhibitions
         async function getExhibitions(){
             const exhListItem = document.getElementById('exhibitions-list');
 
             try {
                 // go get the data from NMA
-                const response = await fetch(nmaAPI);
+                const response = await fetch(namImg);
                 // return it in JSON
                 const data = await response.json();
 
@@ -32,17 +34,24 @@
                 console.log(data);
 
                 data.data.forEach(item => {
-                    // console.log(item);
+                    //console.log(item);
+
+                    // dig down till
+                    const image = item.hasVersion[0].hasVersion[0].identifier;
+
+                    console.log(image);
 
                     // create list item
                     const listItem = document.createElement('li');
 
+                    listItem.innerHTML = '<img src="' + image + '" alt="image">';
+
                     // add the content to it
-                    listItem.textContent = item.title;
+                    // listItem.textContent = item.title;
 
                     // console.log(listItem);
 
-                    // // append the children to parent ul
+                    // append the children to parent ul
                     exhListItem.appendChild(listItem);
 
                     // exhListItem.appendChild(listItem);
